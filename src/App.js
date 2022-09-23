@@ -40,7 +40,7 @@ function App() {
             {!isAgeValid && <AgeError isClicked={clickHandler} />}
             {!isNameValid && <NameError isClicked={nameHandler} />}
             {allUserData.length > 0 && allUserData.map(user => {
-                return <UserDetails key={user.id} name={user.name} age={user.age}  />
+                return <UserDetails key={user.id} name={user.name} age={user.age} college={user.college}  />
             })}
         </div>
     )

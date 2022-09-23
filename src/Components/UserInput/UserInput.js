@@ -7,7 +7,8 @@ function UserInput(props) {
 
     const nameRef = useRef()
     const ageRef = useRef()
-
+    const collegeRef = useRef()
+ 
     // function nameHandler(event) {
     //     setName(event.target.value)
     // }
@@ -21,11 +22,13 @@ function UserInput(props) {
         const data = {
             name: nameRef.current.value,
             age: ageRef.current.value,
+            college: collegeRef.current.value,
             id: Math.random().toString()
         }
         props.userData(data)
         nameRef.current.value = ''
         ageRef.current.value = ''
+        collegeRef.current.value = ''
         // setName('')
         // setAge('')
     }
@@ -37,6 +40,9 @@ function UserInput(props) {
             </div>
             <div>
                 <label>Age</label> <input type='number' ref={ageRef} />
+            </div>
+            <div>
+                <label>College</label> <input type='text' ref={collegeRef} />
             </div>
             <div>
                 <button type='submit'>Add User</button>
