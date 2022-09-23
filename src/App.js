@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react'
+import AgeError from './Components/UserInput/AgeError'
+import UserDetails from './Components/UserInput/UserDetails'
+import UserInput from "./Components/UserInput/UserInput"
+import NameError from './Components/UserInput/NameError'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [allUserData, setAllUserData] = useState([])
+    const [isAgeValid, setValidAge] = useState(true)
+    const [isNameValid, setValidName] = useState(true)
+
+    function getUserData(userData) {
+        if (userData.age > 0) {
+            setAllUserData(() => {
+                return [userData, ...allUserData]
+            })
+        } else if (userData.name.trim().length === 0) {
+            setValidName(false)
+        }else {
+            setValidAge(false)
+        }
+    }
+
+    function clickHandler(clicked) {
+        if (clicked) {
+            setValidAge(true)
+        }
+    }
+
+    function nameHandler(clicked) {
+        if (clicked) {
+            setValidName(true)
+        }
+    }
+
+    return (
+        <div>
+            <UserInput userData={getUserData} />
+            {!isAgeValid && <AgeError isClicked={clickHandler} />}
+            {!isNameValid && <NameError isClicked={nameHandler} />}
+            {allUserData.length > 0 && allUserData.map(user => {
+                return <UserDetails key={user.id} name={user.name} age={user.age}  />
+            })}
+        </div>
+    )
 }
 
-export default App;
+export default App
