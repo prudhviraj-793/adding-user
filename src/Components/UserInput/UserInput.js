@@ -1,37 +1,42 @@
-import {useState} from 'react'
+import {useRef} from 'react'
 
 function UserInput(props) {
 
-    const [name, setName] = useState('')
-    const [age, setAge] = useState('')
+    // const [name, setName] = useState('')
+    // const [age, setAge] = useState('')
 
-    function nameHandler(event) {
-        setName(event.target.value)
-    }
+    const nameRef = useRef()
+    const ageRef = useRef()
 
-    function ageHandler(event) {
-        setAge(event.target.value)
-    }
+    // function nameHandler(event) {
+    //     setName(event.target.value)
+    // }
+
+    // function ageHandler(event) {
+    //     setAge(event.target.value)
+    // }
 
     function submitHandler(event) {
         event.preventDefault()
         const data = {
-            name: name,
-            age: age,
+            name: nameRef.current.value,
+            age: ageRef.current.value,
             id: Math.random().toString()
         }
         props.userData(data)
-        setName('')
-        setAge('')
+        nameRef.current.value = ''
+        ageRef.current.value = ''
+        // setName('')
+        // setAge('')
     }
 
     return (
         <form onSubmit={submitHandler}>
             <div>
-                <label>UserName</label> <input type='text' value={name} onChange={nameHandler}  />
+                <label>UserName</label> <input type='text' ref={nameRef} />
             </div>
             <div>
-                <label>Age</label> <input type='number' value={age} onChange={ageHandler} />
+                <label>Age</label> <input type='number' ref={ageRef} />
             </div>
             <div>
                 <button type='submit'>Add User</button>
